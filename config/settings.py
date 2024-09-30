@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'corsheaders',
     'drf_yasg',
+    'redis',
 
     'users',
     'habits',
@@ -74,11 +75,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DATABASE_NAME"),
-        "USER": os.getenv("DATABASE_USER"),
-        "HOST": os.getenv("DATABASE_HOST"),
-        "PORT": os.getenv("DATABASE_PORT"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST"),
+        "PORT": os.getenv("POSTGRES_PORT"),
     }
 }
 
@@ -146,19 +147,11 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-# Telegram
-TELEGRAM_URL = "https://api.telegram.org/bot"
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
-# Cors
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",  # Замените на адрес вашего фронтенд-сервера
-]
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_URL = 'https://api.telegram.org/bot'
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://read-and-write.example.com",  # Замените на адрес вашего фронтенд-сервера
-    "http://localhost:8000",
-    "http://127.0.0.1:8000/admin/",  # и добавьте адрес бэкенд-сервера
-]
-
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000', ]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', ]
 CORS_ALLOW_ALL_ORIGINS = False
